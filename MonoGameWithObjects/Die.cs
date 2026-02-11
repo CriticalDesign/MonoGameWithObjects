@@ -20,6 +20,10 @@ namespace MonoGameWithObjects
         //constructor
         public Die(int numSidesIn, List<Texture2D> diceTexturesIn, float myXIn, float myYIn)
         {
+            if(numSidesIn < 2 || numSidesIn > 6)
+            {
+                numSidesIn = 6; //default to 6 sides
+            }
             _numSides = numSidesIn;
             Roll();
             _diceTextures = diceTexturesIn;
