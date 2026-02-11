@@ -16,6 +16,7 @@ namespace MonoGameWithObjects
         private List<Texture2D> _diceTextures;
 
         private Hero _myHero;
+        private Texture2D _heroTexture;
     
 
         public Game1()
@@ -29,7 +30,6 @@ namespace MonoGameWithObjects
         {
             // TODO: Add your initialization logic here
 
-            _myHero = new Hero("Aaron The GREAT!", 75);
             base.Initialize();
         }
 
@@ -47,6 +47,11 @@ namespace MonoGameWithObjects
             myD1 = new Die(1000000, _diceTextures, 10, 10);
             myD2 = new Die(3, _diceTextures, 10, 100);
 
+            _heroTexture = Content.Load<Texture2D>("hero");
+            _myHero = new Hero("Aaron", 75, 
+                250, 400, _heroTexture);
+
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -59,12 +64,10 @@ namespace MonoGameWithObjects
             myD1.Update();
             myD2.Update();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.H))
-                _myHero.Heal(1);
+            _myHero.Update();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.K))
-                _myHero.TakeDamage(1);
 
+            int damageAmount = _myHero.DealDamage();
 
 
             base.Update(gameTime);
@@ -77,12 +80,12 @@ namespace MonoGameWithObjects
             myD1.Draw(_spriteBatch);
             myD2.Draw(_spriteBatch);
 
+            _myHero.Draw(_spriteBatch);
+
             _spriteBatch.Begin();
             _spriteBatch.DrawString(_gameFont, _myHero.GetName() 
-                + " has " + _myHero.GetHealth() 
-                + " health.", new Vector2(10, 200), Color.White);
-
-
+                + " : " + _myHero.GetHealth(), 
+                new Vector2(_myHero.GetX(), _myHero.GetY() - 25), Color.White);
             _spriteBatch.End();
 
             // TODO: Add your drawing code here
