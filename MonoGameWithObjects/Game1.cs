@@ -80,7 +80,11 @@ namespace MonoGameWithObjects
             myD1.Draw(_spriteBatch);
             myD2.Draw(_spriteBatch);
 
-            _myHero.Draw(_spriteBatch);
+            if(!_myHero.IsDead())
+            {
+                _myHero.Draw(_spriteBatch);
+            }
+            
 
             _spriteBatch.Begin();
             _spriteBatch.DrawString(_gameFont, _myHero.GetName() 
